@@ -1,0 +1,54 @@
+---
+title: "morphometric"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## install packages
+```{r}
+file.sources <- list.files(paste(getwd(), "/R", sep=""), pattern="*.R", full.names=TRUE, ignore.case=TRUE)
+file.sources
+sapply(file.sources,source,.GlobalEnv)
+```
+
+```{r}
+#load data
+l.metric<-loadmetric("data/biometric/all")
+l.tps <- load.tps("data/tps12/all")
+lmg1<-loadmetric("data/biometric/g1")
+lmg2<-loadmetric("data/biometric/g2")
+lmg3<-loadmetric("data/biometric/g3")
+lmg4<-loadmetric("data/biometric/g4")
+ltg1 <- load.tps("data/tps12/g1")
+ltg2 <- load.tps("data/tps12/g2")
+ltg3 <- load.tps("data/tps12/g3")
+ltg4 <- load.tps("data/tps12/g4")
+```
+
+```{r}
+group1 <- c("phapi", "bulla", "closterocerca", "furcata", "hamata", "lunaris", "unguitata")
+group2 <- c("junki", "minuta", "udulata")
+group3 <- c("aculeata", "arcula", "crepida", "curvicornis", "leontina", "mitis", "pertica", "rhenana", "signifera", "simoneae", "superaculeata")
+group4 <- c("doryssa", "dorysimilis", "hornemanni", "papuana", "ruttneri", "thailandensis")
+#### combine tps and metric data ##########
+l.metric.c <- c.metricdata(l.metric)
+lmg1.c <- c.metricdata(lmg1)
+lmg2.c <- c.metricdata(lmg2)
+lmg3.c <- c.metricdata(lmg3)
+lmg4.c <- c.metricdata(lmg4)
+
+l.tps.c <- c.tpsdata(l.tps)
+ltg1.c <- c.tpsdata(ltg1)
+ltg2.c <- c.tpsdata(ltg2)
+ltg3.c <- c.tpsdata(ltg3)
+ltg4.c <- c.tpsdata(ltg4)
+```
+
+```{r}
+plot(pca.metric(l.metric.c$data))
+plot(lda.tps(l.tps.c$land, l.tps.c$group))
+```
+
